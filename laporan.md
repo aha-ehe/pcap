@@ -70,7 +70,7 @@ Seluruh lalu lintas klien menuju server selalu diawali dengan byte identifikasi:
    bb 80 00 25 30 31 32 32 35 63 38 2d 38 39 62 34  | ...%01225c38-89b4
    2d 34 33 61 39 2d 61 65 32 35 2d 65 31 66 31 65  | -43a9-ae25-e1f1e
    35 34 38 66 61 37 63 06 00 01 04 00 00 00 4b 00  | 548fa7c.......K.
-   ... (Terpotong untuk laporan ringkas, referensi penuh di payload_dump.md)
+   ... (Terpotong untuk laporan ringkas)
    ```
    *Catatan:* Terlihat ada string berformat UUID (`01225c38-89b4-43a9-ae25-e1f1e548fa7c`) yang ditransmisikan dalam format ASCII teks murni (plain-text). String ini kemungkinan merupakan *Player ID*, *Session ID*, atau *Device ID* klien yang digunakan server untuk membedakan pemain tersebut.
 
@@ -106,7 +106,3 @@ Berbeda dengan klien, paket balasan yang dikirim server menuju klien hampir semu
    - Protokol **TIDAK sepenuhnya dienkripsi secara end-to-end** dalam level transport (*Plain UDP* alih-alih *DTLS*). Hal ini terbukti dengan ditemukannya Player ID (UUID) yang ditransmisikan dalam bentuk *plaintext* (teks yang bisa dibaca).
    - Akan tetapi, paket data game/posisi (payload utama) sepertinya diserialisasi menjadi format biner berpemilik (proprietary binary format) milik game engine tersebut. Ini berarti *cheater* mungkin saja bisa membaca atau memodifikasi nilai float/integer tertentu di memori paket (Packet Spoofing/Manipulation) jika ia mengetahui struktur serialisasi paketnya.
 3. **Stabilitas Sesi:** Klien secara konstan mengirimkan paket yang diawali dengan header `b9` yang berukuran kecil (`32 bytes`), kemungkinan ini digunakan sebagai *Heartbeat* (jantung) agar server tidak memutus sesi pemain (timeout).
-
----
-
-> **Catatan Lampiran:** Untuk keperluan rekayasa balik (reverse-engineering) yang lebih rinci atau analisis payload paket secara utuh (bytes demi bytes), saya telah mengekstrak seluruh paket UDP game ini ke dalam satu file dump terpisah bernama `payload_dump.md`. Anda bisa merujuk ke file tersebut.
